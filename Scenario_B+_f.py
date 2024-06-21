@@ -33,9 +33,9 @@ for the fluxes
 #%% import necessary libraries and data
 import           numpy   as np
 import matplotlib.pyplot as plt
-#import CMD_AP2_functions as fnc
+from matplotlib.patches import Patch
+from matplotlib.legend import Legend
 
-    
 
 
 #%% Define paramters
@@ -144,43 +144,6 @@ while rr <4:
         data[5,rr, RR] = Q
         
 #%% Plot: THICKNESS OF HALITE ND GYPSUM
-from matplotlib.patches import Patch
-from matplotlib.legend import Legend
-c_hal = "green"
-c_gyp = "blue"
-fig, ax = plt.subplots(5, 1, sharex='col', sharey='row', figsize=(9, 6), dpi=200)
-ax[0].set_title('Gypsum and Halite precipitation for different rivers')
-rr=-1
-while rr <4:
-    rr+=1 
-    ax[rr].vlines(0,0, 0.05, color= "grey")
-    ax[rr].scatter(0,0, color= "w", label= River_str[rr])
-    ax[rr].fill_between(1-1/factor, data[3,rr,:]*1000,0, color= c_gyp, alpha = 0.5)
-    ax[rr].fill_between(1-1/factor, data[4,rr,:]*1000,0, color= c_hal, alpha = 0.5)
-    ax[rr].set_ylim([0, 0.05])
-    ax[rr].legend(markerscale=1., scatterpoints=1, fontsize=10, loc = "center right")
-    ax[rr].spines['left'].set_visible(False)
-    ax[rr].spines['right'].set_visible(False)
-    ax[rr].spines['top'].set_visible(False)
-    
-    #ax[rr].spines['bottom'].set_visible(False)
-ax[rr].set_xlim([1-1/factor[0], 1-1/factor[-1]])
-
-fig.text(0.04, 0.5, 'precipitation rate [m/kyr]', va='center', rotation='vertical')
-legend_elements = [Patch(facecolor=c_gyp , edgecolor='w',label='Gypsum'),
-                   Patch(facecolor=c_hal, edgecolor='w',label='Halite')]
-leg = Legend(ax[0],legend_elements,["Gypsum", "Halite"],loc='lower center', frameon=False)
-ax[0].add_artist(leg)
-ax[4].set_xlabel( "fwb/R" )
-plt.subplots_adjust(left=0.125,
-                    bottom=0.125,
-                    right=0.95,
-                    top=0.9,
-                    wspace=0.,
-                    hspace=0.)
-#%% NICE pLOTS WITH THICKNESS OF HALITE ND GYPSUM
-from matplotlib.patches import Patch
-from matplotlib.legend import Legend
 c_hal = "green"
 c_gyp = "blue"
 fig, ax = plt.subplots(5, 1, sharex='col', sharey='row', figsize=(9, 6), dpi=200)
