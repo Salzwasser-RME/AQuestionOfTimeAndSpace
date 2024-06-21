@@ -3,13 +3,23 @@
 """
 Created on Tue Nov 15 17:21:19 2022
 
-@author: ron
+@author: Ronja Ebner
 
-C-Question
+Script in support of the paper 
+_______________________________________________________________________________
+A question of time and space: 
+    A model approach to the synchronicity of gypsum and halite during the 
+    Messinian Salinity Crisis
+Ebner&Meijer, 2024
+_______________________________________________________________________________
 
-Scenario A2
+Configuration A2
 
-# for ploting. it is important to find the right balance between 
+This script calculates the salinties for the different boxes for the A2 
+configuration for multiple values of e,g,f,c.
+
+
+
 """
 
 import           numpy   as np
