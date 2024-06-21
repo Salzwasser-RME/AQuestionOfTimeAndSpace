@@ -3,11 +3,23 @@
 """
 Created on Tue Nov 15 17:21:19 2022
 
-@author: ron
+@author: Ronja Ebner
 
-C-Question
+Script in support of the paper 
+_______________________________________________________________________________
+A question of time and space: 
+    A model approach to the synchronicity of gypsum and halite during the 
+    Messinian Salinity Crisis
+Ebner&Meijer, 2024
+_______________________________________________________________________________
 
-Scenario A1
+Configuration A1
+
+This script calculates the salinties for the different boxes for the A1 
+configuration for multiple values of e,g,f,c.
+
+
+
 """
 
 import           numpy   as np
@@ -55,6 +67,9 @@ for f in F:
         for e in E:
             ig = 0
             for g in  G:
+                # t-max increases with decreasing g to
+                # 1. make sure that equlibrium is reached (small g)
+                # 2. minimise the runtime (large g)
                 t_max = 1_000_000/(np.log10(g))**2
                 S    = np.ones((3, int(t_max/dt)+1))*SA
                 t=0
