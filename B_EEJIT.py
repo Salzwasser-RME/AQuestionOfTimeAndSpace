@@ -1,13 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Nov 16 11:44:48 2022
+Created on Tue Nov 15 17:21:19 2022
 
-@author: ron
+@author: Ronja Ebner
 
-C-Question
+Script in support of the paper 
+_______________________________________________________________________________
+A question of time and space: 
+    A model approach to the synchronicity of gypsum and halite during the 
+    Messinian Salinity Crisis
+Ebner&Meijer, 2024
+_______________________________________________________________________________
 
-Scenario B
+Configuration B
+
+This script calculates the salinties for the different boxes for the B
+configuration for multiple values of e,g,f,c.
+
+
+
 """
 
 import           numpy   as np
