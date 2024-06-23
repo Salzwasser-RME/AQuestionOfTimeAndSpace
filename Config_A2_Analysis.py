@@ -2,33 +2,7 @@
 """
 Created on Thu Feb 16 11:49:00 2023
 
-@author: rme_w
-
-curve fitting the output to get rid of the jumps
-
-#example
-1. define function to fit on
-def model_f(x,a,b,c):
-  return a*(x-b)**2+c
-
-# a, b and c as p0=[3,2,-16].
-
-2. call fitting function
-and feed with base function, data and parameters
-popt, pcov = curve_fit(model_f, x_data, y_data, p0=[3,2,-16])
-
-3. get the optimized parameters
-
-4. plot the comparinson
-
-a_opt, b_opt, c_opt = popt
-x_model = np.linspace(min(x_data), max(y_data), 100)
-y_model = model_f(x_model, a_opt, b_opt, c_opt) 
- 
-plt.scatter(x_data, y_data)
-plt.plot(x_model, y_model, color='r')
-plt.show()
-
+@author: Ronja Ebner
 
 """
 import           numpy   as np
@@ -39,13 +13,14 @@ from scipy.interpolate import interp1d
 from matplotlib.colors import LogNorm
 from scipy.optimize import curve_fit
 
-#%% Read the data from files
-# Output_ScanA1_f=xxx_c=xxx_VAR.txt
-core_name= "Data/minirun/DATA/Output_ScenA2_"
-VAR = ['S0', 'S1', 'S2', 'F', 'Q']
+#%% efine run to plot
+core_name= "/DATA/Output_ScenA2_"
+figurename= ("Example_A2")
 F   = np.array([0.01, 0.1])
 C   = np.array([10**2, 10**4, 10**6])
+
 # Get the axis
+VAR = ['S0', 'S1', 'S2', 'F', 'Q']
 E   = np.loadtxt(core_name + "E.txt", delimiter=',')
 G   = np.loadtxt(core_name + "G.txt", delimiter=',')
 # define arrays
@@ -55,7 +30,7 @@ S2  = np.zeros((len(G), len(C), len(E), len(F)))
 FLUX= np.zeros((len(G), len(C), len(E), len(F)))
 Q   = np.zeros((len(G), len(C), len(E), len(F)))
 
-# get ze data from ze filez
+# get data
 ci = 0
 for c in C:
     fi = 0
@@ -319,7 +294,6 @@ plt.subplots_adjust(left=0.2,
                     top=0.75,
                     wspace=0.01,
                     hspace=0.4)
-figurename= ("TMP_Scen_A2_ALL_new")
-plt.savefig(figurename +"-smooth.png", dpi=300)
+plt.savefig("Figures" + figurename +"-smooth.png", dpi=300)
 plt.show()
 plt.figure()
