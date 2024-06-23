@@ -2,23 +2,20 @@
 """
 Created on Thu Feb 16 11:49:00 2023
 
-@author: rme_w
+@author: Ronja Ebner
 
-curve fitting the output to get rid of the jumps
+Getting data from model run and plot results
 
 """
 import           numpy   as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
-
-#from matplotlib.ticker import (MultipleLocator, AutoMinorLocator)
 from matplotlib.colors import LogNorm
 from scipy.optimize import curve_fit
 
-#%% Read the data from files
-# Output_ScanA1_f=xxx_c=xxx_VAR.txt "DATA/Output_ScenA1_Focussed"
-core_name= "Data/minirun/DATA/Output_ScenA1_"
-VAR = ['S0', 'S1', 'S2', 'F', 'Q']
+#%% Define the run you want to read
+core_name= "DATA/Output_ScenA1_"
+figurename= ("Examplerun_A1")
 
 F   = np.array([0.01, 0.1])
 C   = np.array([10,50,90])/100
@@ -34,6 +31,7 @@ SH  = 350
 #%%
 
 # Get the axis
+VAR = ['S0', 'S1', 'S2', 'F', 'Q']
 E   = np.loadtxt(core_name + "E.txt", delimiter=',')
 G   = np.loadtxt(core_name + "G.txt", delimiter=',')
 # define arrays
@@ -42,7 +40,7 @@ S1  = np.zeros((len(G), len(C), len(E), len(F)))
 S2  = np.zeros((len(G), len(C), len(E), len(F)))
 FLUX= np.zeros((len(G), len(C), len(E), len(F)))
 Q   = np.zeros((len(G), len(C), len(E), len(F)))
-# get ze data from ze filez
+# get data
 ci = 0
 for c in C:
     fi = 0
@@ -285,8 +283,6 @@ plt.subplots_adjust(left=0.2,
                     top=0.75,
                     wspace=0.01,
                     hspace=0.4)
-
-figurename= ("TEST_TMP_Scen_A1_ALL_new")
-plt.savefig(figurename +".png", dpi=300)
+plt.savefig("Figures" + figurename +".png", dpi=300)
 plt.show()
 plt.figure()
