@@ -3,22 +3,20 @@
 Created on Thu Feb 16 11:49:00 2023
 
 @author: Ronja Ebner
-
-
 """
 import           numpy   as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 from scipy.optimize import curve_fit
 
-#%% Read the data from files
-# Output_ScanA1_f=xxx_c=xxx_VAR.txt
-core_name= "Data/minirun/DATA/Output_ScenB_"
+#%% Define Run to plot
+core_name= "DATA/Output_ScenB_"
 figurename= ("TMP_Scen_B")
-VAR = ['S0', 'S1', 'S2', 'F', 'Q']
 F   = np.array([0.01, 0.1])
 C   = np.array([10**4, 10**6])
+
 # Get the axis
+VAR = ['S0', 'S1', 'S2', 'F', 'Q']
 E   = np.loadtxt(core_name + "E.txt", delimiter=',')
 G   = np.loadtxt(core_name + "G.txt", delimiter=',')
 # define arrays
@@ -177,7 +175,7 @@ plt.subplots_adjust(left=0.2,
                     wspace=0.01,
                     hspace=0.4)
 
-plt.savefig(figurename +"switched.png", dpi=300)
+plt.savefig("Figures" + figurename +"switched.png", dpi=300)
 
 
 
