@@ -109,7 +109,7 @@ for f in F:
                             
                 if S[1,ii-1]>= SG: # diluted box has reached gypsum
                     time_all_gypsum     = np.searchsorted(S[1,:], SG)*dt
-                    if max(S[1,ii-1])>= SH: # open box also has reached halite
+                    if S[1,ii-1]>= SH: # open box also has reached halite
                         time_all_halite = np.searchsorted(S[1,:], SH)*dt
 
 

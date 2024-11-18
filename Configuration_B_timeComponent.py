@@ -27,7 +27,6 @@ import           numpy   as np
 
 #%% time and stuff
 yr2sc   = 24*60*60*365.25
-
 dt      = 0.5
 DT      = dt*yr2sc
 t_max   = 40_000
