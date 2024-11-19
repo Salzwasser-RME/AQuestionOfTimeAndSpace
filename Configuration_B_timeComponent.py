@@ -41,7 +41,7 @@ SG  = 145
 SA  =  36
 SH  = 350
 #
-G   =np.logspace(2, 7, num=15)
+G   =np.logspace(2, 7, num=150)
 #
 E_step = 12.5
 Etmp   = np.arange(12.5, 80, E_step)
@@ -57,7 +57,7 @@ d_mix       = 0.5*D0
 
 arrSB = np.zeros((3, len(G), len(C), len(E), len(F)))
 arrFB = np.zeros((2, len(G), len(C), len(E), len(F)))
-arrTime = np.zeros((2, len(G), len(C), len(E), len(F)))
+arrTime = np.zeros((4, len(G), len(C), len(E), len(F)))
 
 #%% loop
 fi=0
@@ -104,19 +104,27 @@ for f in F:
                                     *DT/V[2])
                     ii+=1
                     
-                time_1_gypsum = 0
-                time_0_halite = 0
-                time_1_halite = 0
-                
-                if max(S[1,:])>= SH: # open has reached halite
-                    time_1_gypsum = np.searchsorted(S[0,:], SG)*dt
-                    time_0_halite = np.searchsorted(S[1,:], SH)*dt
-                    if max(S[0,:])>= SH: # margin box also has reached halite
-                        time_1_halite = np.searchsorted(S[1,:], SH)*dt
-
+                time_first_gypsum   = 0    
+                time_all_gypsum     = 0
+                time_first_halite   = 0
+                time_all_halite     = 0
+                if S[1,ii-1]>= SG: # driver box has reached gypsum
+                    time_first_gypsum = np.searchsorted(S[1,:], SG)*dt
+                    if S[1,ii-1]>= SH: # driver box has reached halite
+                            time_first_halite   = np.searchsorted(S[1,:], SH)*dt
                             
-                DT_G1_H0 = time_0_halite - time_1_gypsum
-                DT_G1_H1 = time_1_halite - time_1_gypsum    
+                            
+                if S[0,ii-1]>= SG: # diluted box has reached gypsum
+                    time_all_gypsum     = np.searchsorted(S[0,:], SG)*dt
+                    if S[0,ii-1]>= SH: # open box also has reached halite
+                        time_all_halite = np.searchsorted(S[0,:], SH)*dt
+
+
+                arrTime[:, ig, ic, ie, fi] = [time_first_gypsum,
+                                              time_all_gypsum ,
+                                              time_first_halite,
+                                              time_all_halite]
+
                 arrSB[:, ig, ic, ie, fi]= [S[0,ii], S[1,ii], S[2,ii]]
                 arrFB[:, ig, ic, ie, fi]= [Q,F12]
    
@@ -127,7 +135,7 @@ for f in F:
 
     
 #%% Save arrays in txt files
-name_dir="DATA/Output_ScenB_mini_"
+name_dir="DATA/Output_ScenB_mini_time"
 ci=0
 for c in C:
     fi=0
@@ -154,6 +162,22 @@ for c in C:
         #Q
         data = np.squeeze(arrFB[1,:,ci, :, fi])
         np.savetxt(name_file+"_F.txt",data,delimiter=",")
+        
+        #time_first_gypsum 
+        data = np.squeeze(arrTime[0,:,ci, :, fi])
+        np.savetxt(name_file+"_time_first_gypsum.txt",data,delimiter=",")
+        
+        #time_all_gypsum 
+        data = np.squeeze(arrTime[1,:,ci, :, fi])
+        np.savetxt(name_file+"_time_all_gypsum.txt",data,delimiter=",")
+        
+        #time_first_halite
+        data = np.squeeze(arrTime[2,:,ci, :, fi])
+        np.savetxt(name_file+"_time_first_halite.txt",data,delimiter=",")
+        
+        #time_all_halite
+        data = np.squeeze(arrTime[3,:,ci, :, fi])
+        np.savetxt(name_file+"_time_all_halite.txt",data,delimiter=",")
         
         fi+=1
     ci+=1
