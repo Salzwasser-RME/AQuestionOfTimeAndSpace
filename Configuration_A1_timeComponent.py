@@ -42,7 +42,7 @@ SG  = 145
 SA  =  36
 SH  = 350
 #
-G   =np.logspace(2, 7, num=15)
+G   =np.logspace(2, 7, num=150)
 #
 E_step = 12.5
 Etmp   = np.arange(12.5, 80, E_step)
@@ -128,7 +128,7 @@ for f in F:
             
 #%% Save arrays in txt files
 print( "begin saving" )
-name_dir="DATA/Output_ScenA1_mini_time"
+name_dir="../qoTaS_DATA/Output_ScenA1_mini_time"
 ci=0
 for c in C:
     fi=0

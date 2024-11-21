@@ -138,7 +138,7 @@ for f in F:
     fi+=1
             
 #%% Save arrays in txt files
-name_dir="DATA/Output_ScenA2_mini_time"
+name_dir="../qoTaS_DATA/Output_ScenA2_mini_time"
 ci=0
 for c in C:
     fi=0
