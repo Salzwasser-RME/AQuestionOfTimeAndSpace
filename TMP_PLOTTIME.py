@@ -74,7 +74,7 @@ for c in CA2:
     ci += 1
 
 #%% get data A2
-core_name= "DATA/Output_ScenB_mini_"
+core_name= "../qoTaS_DATA/Output_ScenB_mini_time"
 FB   = np.array([0.01, 0.1])
 CB   = np.array([10**4, 10**6])
 conf = 2
@@ -117,16 +117,16 @@ color_conf = [colorA1, colorA2, colorB]
 iif1=  0
 iif2= -1
 
-iic1=  -1
-iic2= 0
+iic1=  1
+iic2= 1
 
 fs  =  15
 
 fig, ax = plt.subplots()
 axins = ax.inset_axes([0.4, 0.47, 0.4, 0.4])
 S= 1
-for conf in [0]:
-    for iie in [-1, 0]:
+for conf in [0,1,2]:
+    for iie in [1, 5]:
         y1 = arrS[S, :, iic1, iie, iif1, conf] 
         y2 = arrS[S, :, iic2, iie, iif2, conf]
         ax.fill_between(G, y1, y2, where= y2 <=350, interpolate=True, color='grey',
@@ -134,8 +134,8 @@ for conf in [0]:
         axins.fill_between(G, y1, y2, where= y2 <=350, interpolate=True, color='grey',
                            alpha=0.5)
         
-        ax.plot(G, y1 , color = colorA1)
-        ax.plot(G, y2 , color = colorA1)
+        ax.plot(G, y1 , color = color_conf[conf])
+        ax.plot(G, y2 , color = color_conf[conf])
         axins.plot(G, y1, color =color_conf[conf])
         axins.plot(G, y2, color =color_conf[conf])
 
@@ -173,56 +173,34 @@ plt.title("upper box", fontsize= fs*1.2)
 
 plt.legend(handles=legend_elements, loc='upper right')
 plt.tight_layout()
-# fig.savefig( figname+ "UpperBox.png") 
-# fig.savefig( figname+ "UpperBox.svg", format="svg") 
-# plt.close() 
+fig.savefig( figname+ "UpperBox.png") 
+fig.savefig( figname+ "UpperBox.svg", format="svg") 
+plt.close() 
 
 #%% PLot time ti first gypsum for different configurations
 iif1=  0
 iif2= -1
 
-iic1=  -1
-iic2= 0
+iic1=  1
+iic2= 1
 
 fs  =  15
 
 fig, ax = plt.subplots()
-# axins = ax.inset_axes([0.4, 0.47, 0.4, 0.4])
 S= 1
-for conf in [0]:
-    for iie in [-1, 0]:
+for conf in [0,1,2]:
+    for iie in [1, 5]:
         y1 = T_First_G[ :, iic1, iie, iif1, conf] /1000
         y2 = T_First_G[ :, iic2, iie, iif2, conf] /1000
         ax.fill_between(G, y1, y2, where= y2 <=350, interpolate=True, color='grey',
                         alpha=0.5)
-        # axins.fill_between(G, y1, y2, where= y2 <=350, interpolate=True, color='grey',
-        #                    alpha=0.5)
+
         
-        ax.plot(G, y1 , color = colorA1)
-        ax.plot(G, y2 , color = colorA1)
-        # axins.plot(G, y1, color =color_conf[conf])
-        # axins.plot(G, y2, color =color_conf[conf])
+        ax.plot(G, y1 , color = color_conf[conf])
+        ax.plot(G, y2 , color = color_conf[conf])
 
-# ax.hlines(SG   , G[0], G[-1],  linewidth= 2, linestyle = ':', color= 'k')
-# axins.hlines(SG, G[0], G[-1],  linewidth= 2, linestyle = ':', color= 'k')
-# ax.hlines(SH   , G[0], G[-1],  linewidth= 2, linestyle = '-', color= 'k')
-# axins.hlines(SH, G[0], G[-1],  linewidth= 2, linestyle = '-', color= 'k')
-
-# sub region of the original image
-# ADJUST THE WINDOW TO FIT THE VALUES
-x1, x2, y1, y2 =G[0], 0.6*10**3, 310, 350
-# axins.set_xlim(x1, x2)
-# axins.set_ylim(y1, y2)
-
-
-# ax.indicate_inset_zoom(axins, edgecolor="black")
-# axins.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
 ax.set_xscale('log')
-# axins.set_xscale('log')
 
-
-# axins.set_xticklabels([])
-# axins.set_xticks([])
 ax.set_xlim([G[0], G[-1]])
 # ax.set_ylim([0, 150])
 
@@ -238,9 +216,173 @@ plt.title("time to first gypsum", fontsize= fs*1.2)
 
 plt.legend(handles=legend_elements, loc='upper right')
 plt.tight_layout()
-# fig.savefig( figname+ "time_first_gypsum.png") 
-# fig.savefig( figname+ "ime_first_gypsum.svg", format="svg") 
-# plt.close() 
+fig.savefig( figname+ "time_first_gypsum.png") 
+fig.savefig( figname+ "ime_first_gypsum.svg", format="svg") 
+plt.close() 
+
+#%% PLot time ti first gypsum for different configurations
+iif1=  0
+iif2= -1
+
+iic1=  1
+iic2= 1
+
+fs  =  15
+
+fig, ax = plt.subplots()
+S= 1
+for conf in [0,1,2]:
+    for iie in [1, 5]:
+        y1 = T_First_H[ :, iic1, iie, iif1, conf] /1000
+        y2 = T_First_H[ :, iic2, iie, iif2, conf] /1000
+        ax.fill_between(G, y1, y2, where= y2 <=350, interpolate=True, color='grey',
+                        alpha=0.5)
+        
+        ax.plot(G, y1 , color = color_conf[conf])
+        ax.plot(G, y2 , color = color_conf[conf])
+
+ax.set_xscale('log')
+
+ax.set_xlim([G[0], G[-1]])
+
+
+ax.spines['left'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.set_xlabel('low $\longleftarrow$ strait efficiency  $\longrightarrow$ high', color='black', fontsize= fs)
+
+plt.ylabel('time [$kyr$]', fontsize= fs)
+plt.title("time to first halite", fontsize= fs*1.2)
+
+plt.legend(handles=legend_elements, loc='upper right')
+plt.tight_layout()
+fig.savefig( figname+ "time_first_halite.png") 
+fig.savefig( figname+ "ime_first_halite.svg", format="svg") 
+plt.close() 
+
+#%% PLot time ti first gypsum for different configurations
+iif1=  0
+iif2= -1
+
+iic1=  1
+iic2= 1
+
+fs  =  15
+
+fig, ax = plt.subplots()
+S= 1
+for conf in [0,1,2]:
+    for iie in [1, 5]:
+        y1 = (T_First_H[ :, iic1, iie, iif1, conf]-T_First_G[ :, iic1, iie, iif1, conf]) /1000
+        y2 = (T_First_H[ :, iic2, iie, iif2, conf] - T_First_G[ :, iic2, iie, iif2, conf])/1000
+        ax.fill_between(G, y1, y2, where= y2 <=350, interpolate=True, color='grey',
+                        alpha=0.5)
+        
+        ax.plot(G, y1 , color = color_conf[conf])
+        ax.plot(G, y2 , color = color_conf[conf])
+
+ax.set_xscale('log')
+
+ax.set_xlim([G[0], G[-1]])
+
+
+ax.spines['left'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.set_xlabel('low $\longleftarrow$ strait efficiency  $\longrightarrow$ high', color='black', fontsize= fs)
+
+plt.ylabel('time [$kyr$]', fontsize= fs)
+plt.title("time between first gypsum and first halite", fontsize= fs*1.2)
+
+plt.legend(handles=legend_elements, loc='upper right')
+plt.tight_layout()
+fig.savefig( figname+ "time_between_first_gypsum_halite.png") 
+fig.savefig( figname+ "time_between_first_gypsum_halite.svg", format="svg") 
+plt.close() 
+
+#%% PLot time ti first gypsum for different configurations
+iif1=  0
+iif2= -1
+
+iic1=  1
+iic2= 1
+
+fs  =  15
+
+fig, ax = plt.subplots()
+S= 1
+for conf in [0,1,2]:
+    for iie in [1, 5]:
+        y1 = (T_All_H[ :, iic1, iie, iif1, conf]-T_All_G[ :, iic1, iie, iif1, conf]) /1000
+        y2 = (T_All_H[ :, iic2, iie, iif2, conf] - T_All_G[ :, iic2, iie, iif2, conf])/1000
+        ax.fill_between(G, y1, y2, where= y2 <=350, interpolate=True, color='grey',
+                        alpha=0.5)
+        
+        ax.plot(G, y1 , color = color_conf[conf])
+        ax.plot(G, y2 , color = color_conf[conf])
+
+ax.set_xscale('log')
+
+ax.set_xlim([G[0], G[-1]])
+
+
+ax.spines['left'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.set_xlabel('low $\longleftarrow$ strait efficiency  $\longrightarrow$ high', color='black', fontsize= fs)
+
+plt.ylabel('time [$kyr$]', fontsize= fs)
+plt.title("time between all gypsum and all halite", fontsize= fs*1.2)
+
+plt.legend(handles=legend_elements, loc='upper right')
+plt.tight_layout()
+fig.savefig( figname+ "time_between_all_gypsum_halite.png") 
+fig.savefig( figname+ "time_between_all_gypsum_halite.svg", format="svg") 
+plt.close() 
+
+#%% PLot time ti first gypsum for different configurations
+iif1=  0
+iif2= -1
+
+iic1=  1
+iic2= 1
+
+fs  =  15
+
+fig, ax = plt.subplots()
+S= 1
+for conf in [0,1,2]:
+    for iie in [1, 5]:
+        y1 = (T_First_H[ :, iic1, iie, iif1, conf]-T_All_G[ :, iic1, iie, iif1, conf]) /1000
+        y2 = (T_First_H[ :, iic2, iie, iif2, conf] - T_All_G[ :, iic2, iie, iif2, conf])/1000
+        ax.fill_between(G, y1, y2, where= y2 <=350, interpolate=True, color='grey',
+                        alpha=0.5)
+        
+        ax.plot(G, y1 , color = color_conf[conf])
+        ax.plot(G, y2 , color = color_conf[conf])
+
+ax.set_xscale('log')
+
+ax.set_xlim([G[0], G[-1]])
+
+
+ax.spines['left'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.set_xlabel('low $\longleftarrow$ strait efficiency  $\longrightarrow$ high', color='black', fontsize= fs)
+
+plt.ylabel('time [$kyr$]', fontsize= fs)
+plt.title("time tbetween all gypsum and first halite", fontsize= fs*1.2)
+
+plt.legend(handles=legend_elements, loc='upper right')
+plt.tight_layout()
+fig.savefig( figname+ "time_between_all_gypsum_first_halite.png") 
+fig.savefig( figname+ "time_between_all_gypsum_first_halite.svg", format="svg") 
+plt.close() 
 
 
 #%% PLots salinity
