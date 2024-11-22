@@ -43,7 +43,7 @@ SG  = 145
 SA  =  36
 SH  = 350
 #
-G   =np.logspace(2, 7, num=150)
+G   =np.logspace(2, 6, num=450)
 #
 E_step = 12.5
 Etmp   = np.arange(12.5, 80, E_step)
@@ -113,16 +113,21 @@ for f in F:
                 time_all_gypsum     = 0
                 time_first_halite   = 0
                 time_all_halite     = 0
-                if S[0,ii-1]>= SG: # driver box has reached gypsum
-                    time_first_gypsum = np.searchsorted(S[0,:], SG)*dt
-                    if S[0,ii-1]>= SH: # driver box has reached halite
-                            time_first_halite   = np.searchsorted(S[0,:], SH)*dt
-                            
-                            
-                if S[1,ii-1]>= SG: # diluted box has reached gypsum
-                    time_all_gypsum     = np.searchsorted(S[1,:], SG)*dt
-                    if S[1,ii-1]>= SH: # open box also has reached halite
-                        time_all_halite = np.searchsorted(S[1,:], SH)*dt
+                if max(S[[0,1],ii-1])>= SG: # at least one surface box has reached Gypsum  
+                    index               = np.where(np.any(S[[0,1],:]>=SG, axis=0))                
+                    time_first_gypsum   = index[0][0]*dt
+                    index01             = np.where(S[[0,1],:]>=SG)
+                    test                = np.rec.find_duplicate(index01[1].tolist())
+                    if len(test)>0 :# check if both boxes have reached gypsum               
+                        time_all_gypsum = test[0]*dt
+                        
+                if max(S[[0,1],ii-1])>= SH: # at least one surface box has reached Gypsum  
+                    index               = np.where(np.any(S[[0,1],:]>=SH, axis=0))                
+                    time_first_halite   = index[0][0]*dt
+                    index01             = np.where(S[[0,1],:]>=SH)
+                    test                = np.rec.find_duplicate(index01[1].tolist())
+                    if len(test)>0 :# check if both boxes have reached gypsum               
+                        time_all_halite = test[0]*dt
 
 
                 arrTime[:, ig, ic, ie, fi] = [time_first_gypsum,
