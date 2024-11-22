@@ -17,7 +17,7 @@ Load the data separately, this is not yet implemented
 #%% get data A1
 SH = 350
 SG = 145
-figname = "../qoTaS_FIGURE/Output_ScenA1_mini_time_"
+figname = "../qoTaS_FIGURE/Output_mini_time_"
 core_name= "../qoTaS_DATA/Output_ScenA1_mini_time"
 FA1   = np.array([0.01, 0.1])
 CA1   = np.array([10,50,90])/100
@@ -96,8 +96,12 @@ for c in CB:
         
         fi += 1
     ci += 1
-    
-
+#%% get rid of 0s
+arrS[       arrS        ==0.0] = np.nan    
+T_First_G[  T_First_G   ==0.0] = np.nan 
+T_First_H[  T_First_H   ==0.0] = np.nan 
+T_All_G[    T_All_G     ==0.0] = np.nan 
+T_All_H[    T_All_H     ==0.0] = np.nan 
 #%% Cloud figures
 markA1 ='o'
 markA2 ='x'
@@ -109,9 +113,12 @@ legend_elements = [Line2D([0], [0], color=colorA1, alpha = 0.5, lw=4, label='A1'
                    Line2D([0], [0], color=colorA2, alpha = 0.5, lw=4, label='A2'),
                    Line2D([0], [0], color=colorB , alpha = 0.5, lw=4, label='B')]
 
-legend_elements2 = [Line2D([0], [0], color=colorA1, alpha = 0.5, lw=4, linestyle= ':', label='A1'),
-                   Line2D([0], [0], color=colorA2, alpha = 0.5, lw=4, linestyle= '--',  label='A2'),
-                   Line2D([0], [0], color=colorB , alpha = 0.5, lw=4, label='B')]
+legend_elements_2 = [Line2D([0], [0], color=colorA1, alpha = 0.5, lw=4, label='A1 Gypsum'),
+                     Line2D([0], [0], color=colorA2, alpha = 0.5, lw=4, label='A2 Gypsum'),
+                     Line2D([0], [0], color=colorB , alpha = 0.5, lw=4, label='B Gypsum'),
+                     Line2D([0], [0], color=colorA1, alpha = 0.5, lw=4, linestyle= '--', label='A1 Halite'),
+                     Line2D([0], [0], color=colorA2, alpha = 0.5, lw=4, linestyle= '--',  label='A2 Halite'),
+                     Line2D([0], [0], color=colorB , alpha = 0.5, lw=4, linestyle= '--', label='B Halite')]
 color_conf = [colorA1, colorA2, colorB]
 
 y_min = -75
@@ -193,19 +200,19 @@ fig, ax = plt.subplots()
 S= 1
 for conf in [0,1,2]:
     for iie in [1, 5]:
-        y1 = T_First_G[ :, iic1, iie, iif1, conf] /1000
-        y2 = T_First_G[ :, iic2, iie, iif2, conf] /1000
+        y1 = T_First_G[ :, iic1, iie, iif1, conf]/1000
+        y2 = T_First_G[ :, iic2, iie, iif2, conf]/1000
+        y1[y1==0.0]= np.nan
+        y2[y2==0.0]= np.nan
         ax.fill_between(G, y1, y2, where= y2 <=350, interpolate=True, color='grey',
                         alpha=0.5)
 
-        
         ax.plot(G, y1 , color = color_conf[conf])
         ax.plot(G, y2 , color = color_conf[conf])
 
 ax.set_xscale('log')
 
 ax.set_xlim([G[0], G[-1]])
-# ax.set_ylim([0, 150])
 
 ax.spines['left'].set_visible(False)
 ax.spines['right'].set_visible(False)
@@ -220,8 +227,8 @@ plt.ylim([y_min, y_max])
 plt.legend(handles=legend_elements, loc='upper right')
 plt.tight_layout()
 fig.savefig( figname+ "time_first_gypsum.png") 
-fig.savefig( figname+ "ime_first_gypsum.svg", format="svg") 
-plt.close() 
+fig.savefig( figname+ "time_first_gypsum.svg", format="svg") 
+ 
 
 #%% PLot time ti first gypsum for different configurations
 iif1=  0
@@ -238,6 +245,8 @@ for conf in [0,1,2]:
     for iie in [1, 5]:
         y1 = T_First_H[ :, iic1, iie, iif1, conf] /1000
         y2 = T_First_H[ :, iic2, iie, iif2, conf] /1000
+        y1[y1==0.0]= np.nan
+        y2[y2==0.0]= np.nan
         ax.fill_between(G, y1, y2, where= y2 <=350, interpolate=True, color='grey',
                         alpha=0.5)
         
@@ -261,8 +270,8 @@ plt.ylim([y_min, y_max])
 plt.legend(handles=legend_elements, loc='upper right')
 plt.tight_layout()
 fig.savefig( figname+ "time_first_halite.png") 
-fig.savefig( figname+ "ime_first_halite.svg", format="svg") 
-plt.close() 
+fig.savefig( figname+ "time_first_halite.svg", format="svg") 
+
 
 #%% PLot time ti first gypsum for different configurations
 iif1=  0
@@ -279,6 +288,8 @@ for conf in [0,1,2]:
     for iie in [1, 5]:
         y1 = (T_First_H[ :, iic1, iie, iif1, conf]-T_First_G[ :, iic1, iie, iif1, conf]) /1000
         y2 = (T_First_H[ :, iic2, iie, iif2, conf] - T_First_G[ :, iic2, iie, iif2, conf])/1000
+        y1[y1==0.0]= np.nan
+        y2[y2==0.0]= np.nan
         ax.fill_between(G, y1, y2, where= y2 <=350, interpolate=True, color='grey',
                         alpha=0.5)
         
@@ -303,7 +314,7 @@ plt.legend(handles=legend_elements, loc='upper right')
 plt.tight_layout()
 fig.savefig( figname+ "time_between_first_gypsum_halite.png") 
 fig.savefig( figname+ "time_between_first_gypsum_halite.svg", format="svg") 
-plt.close() 
+
 
 #%% PLot time ti first gypsum for different configurations
 iif1=  0
@@ -320,6 +331,8 @@ for conf in [0,1,2]:
     for iie in [1, 5]:
         y1 = (T_All_H[ :, iic1, iie, iif1, conf]-T_All_G[ :, iic1, iie, iif1, conf]) /1000
         y2 = (T_All_H[ :, iic2, iie, iif2, conf] - T_All_G[ :, iic2, iie, iif2, conf])/1000
+        y1[y1==0.0]= np.nan
+        y2[y2==0.0]= np.nan
         ax.fill_between(G, y1, y2, where= y2 <=350, interpolate=True, color='grey',
                         alpha=0.5)
         
@@ -344,7 +357,7 @@ plt.legend(handles=legend_elements, loc='upper right')
 plt.tight_layout()
 fig.savefig( figname+ "time_between_all_gypsum_halite.png") 
 fig.savefig( figname+ "time_between_all_gypsum_halite.svg", format="svg") 
-plt.close() 
+
 
 #%% PLot time ti first gypsum for different configurations
 iif1=  0
@@ -361,6 +374,8 @@ for conf in [0,1,2]:
     for iie in [1, 5]:
         y1 = (T_First_H[ :, iic1, iie, iif1, conf]-T_All_G[ :, iic1, iie, iif1, conf]) /1000
         y2 = (T_First_H[ :, iic2, iie, iif2, conf] - T_All_G[ :, iic2, iie, iif2, conf])/1000
+        y1[y1==0.0]= np.nan
+        y2[y2==0.0]= np.nan
         ax.fill_between(G, y1, y2, where= y2 <=350, interpolate=True, color='grey',
                         alpha=0.5)
         
@@ -386,10 +401,112 @@ plt.ylim([y_min, y_max])
 plt.tight_layout()
 fig.savefig( figname+ "time_between_all_gypsum_first_halite.png") 
 fig.savefig( figname+ "time_between_all_gypsum_first_halite.svg", format="svg") 
-plt.close() 
+ 
+#%% PLot time ti first gypsum and first halite for different configurations
+iif1=  0
+iif2= -1
+
+iic1=  1
+iic2= 1
+
+fs  =  15
+
+fig, ax = plt.subplots(dpi = 200)
+S= 1
+for conf in [0,1,2]:
+    for iie in [1, 5]:
+        y1 = T_First_G[ :, iic1, iie, iif1, conf] /1000
+        y2 = T_First_G[ :, iic2, iie, iif2, conf] /1000
+        # arr[arr==0]=['nan']
+        y1[y1==0.0]= np.nan
+        y2[y2==0.0]= np.nan
+        ax.fill_between(G, y1, y2, where= y2 <=350, interpolate=True, color='grey',
+                        alpha=0.5)
+        
+        ax.plot(G, y1 , color = color_conf[conf], linestyle = '-')
+        ax.plot(G, y2 , color = color_conf[conf], linestyle = '-')
+        
+        y1 = T_First_H[ :, iic1, iie, iif1, conf] /1000
+        y2 = T_First_H[ :, iic2, iie, iif2, conf] /1000
+        y1[y1==0.0]= np.nan
+        y2[y2==0.0]= np.nan
+        ax.fill_between(G, y1, y2, where= y2 <=350, interpolate=True, color='grey',
+                        alpha=0.5)
+        
+        ax.plot(G, y1 , color = color_conf[conf], linestyle = '--')
+        ax.plot(G, y2 , color = color_conf[conf], linestyle = '--')
+
+ax.set_xscale('log')
+
+ax.set_xlim([G[0], G[-1]])
+
+ax.spines['left'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.set_xlabel('low $\longleftarrow$ strait efficiency  $\longrightarrow$ high', color='black', fontsize= fs)
+
+plt.ylabel('time [$kyr$]', fontsize= fs)
+plt.title("time to first halite", fontsize= fs*1.2)
+plt.ylim([y_min, y_max])
+plt.legend(handles=legend_elements_2, loc='upper right')
+plt.tight_layout()
+fig.savefig( figname+ "time_first_both.png") 
+fig.savefig( figname+ "time_first_both.svg", format="svg") 
 
 
-# #%% PLots salinity
+#%% PLot time the conditions take
+# a = np.array([1,2,3,4,5,6,7])
+# n = np.array([9,8,7,6,5,4,3])
+# np.maximum(a, n)
+
+iif1=  0
+iif2= -1
+
+iic1=  1
+iic2= 1
+
+fs  =  15
+
+fig, ax = plt.subplots()
+S= 1
+for conf in [0,1,2]:
+    for iie in [1, 5]:
+        y1 = ((T_All_H[ :, iic1, iie, iif1, conf] - 
+               np.maximum(T_First_H[ :, iic1, iie, iif1, conf], 
+                          T_All_G[ :, iic1, iie, iif1, conf])   )/1000)
+        y2 = ((T_All_H[ :, iic2, iie, iif2, conf] - 
+               np.maximum(T_First_H[ :, iic2, iie, iif2, conf], 
+                          T_All_G[ :, iic2, iie, iif2, conf])   )/1000)
+        y1[y1==0.0]= np.nan
+        y2[y2==0.0]= np.nan
+
+        ax.fill_between(G, y1, y2, where= y2 <=350, interpolate=True, color='grey',
+                        alpha=0.5)
+        
+        ax.plot(G, y1 , color = color_conf[conf])
+        ax.plot(G, y2 , color = color_conf[conf])
+
+ax.set_xscale('log')
+
+ax.set_xlim([G[0], G[-1]])
+
+
+ax.spines['left'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.set_xlabel('low $\longleftarrow$ strait efficiency  $\longrightarrow$ high', color='black', fontsize= fs)
+
+plt.ylabel('time [$kyr$]', fontsize= fs)
+plt.title("duration of simultaneos precipitation", fontsize= fs*1.2)
+
+plt.legend(handles=legend_elements, loc='upper right')
+plt.ylim([y_min, y_max])
+plt.tight_layout()
+fig.savefig( figname+ "duration_conditions_met.png") 
+fig.savefig( figname+ "duration_conditions_met.svg", format="svg") 
+ #%% PLots OLD
 # iif1=  0
 # iif2= -1
 
