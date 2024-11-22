@@ -463,12 +463,13 @@ fig.savefig( figname+ "time_first_both.svg", format="svg")
 iif1=  0
 iif2= -1
 
-iic1=  1
-iic2= 1
+iic1=  0
+iic2=  -1
 
 fs  =  15
 
 fig, ax = plt.subplots()
+axins = ax.inset_axes([0.35, 0.1, 0.45, 0.8])
 S= 1
 for conf in [0,1,2]:
     for iie in [1, 5]:
@@ -486,11 +487,19 @@ for conf in [0,1,2]:
         
         ax.plot(G, y1 , color = color_conf[conf])
         ax.plot(G, y2 , color = color_conf[conf])
+        axins.plot(G, y1 , color = color_conf[conf])
+        axins.plot(G, y2 , color = color_conf[conf])
 
 ax.set_xscale('log')
-
 ax.set_xlim([G[0], G[-1]])
 
+x1, x2, y1, y2 =G[0], 0.4*10**3, -1, 50
+axins.set_xlim(x1, x2)
+axins.set_ylim(y1, y2)
+ax.indicate_inset_zoom(axins, edgecolor="black")
+axins.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
+axins.set_xticklabels([])
+# axins.set_xticks([])
 
 ax.spines['left'].set_visible(False)
 ax.spines['right'].set_visible(False)
