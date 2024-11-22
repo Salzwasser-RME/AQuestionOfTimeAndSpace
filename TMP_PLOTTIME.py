@@ -113,6 +113,9 @@ legend_elements2 = [Line2D([0], [0], color=colorA1, alpha = 0.5, lw=4, linestyle
                    Line2D([0], [0], color=colorA2, alpha = 0.5, lw=4, linestyle= '--',  label='A2'),
                    Line2D([0], [0], color=colorB , alpha = 0.5, lw=4, label='B')]
 color_conf = [colorA1, colorA2, colorB]
+
+y_min = -75
+y_max = 150
 #%% PLot salinity for different configurations
 iif1=  0
 iif2= -1
@@ -213,7 +216,7 @@ ax.set_xlabel('low $\longleftarrow$ strait efficiency  $\longrightarrow$ high', 
 #plt.xlabel('Connection to Atlantic')
 plt.ylabel('time [$kyr$]', fontsize= fs)
 plt.title("time to first gypsum", fontsize= fs*1.2)
-
+plt.ylim([y_min, y_max])
 plt.legend(handles=legend_elements, loc='upper right')
 plt.tight_layout()
 fig.savefig( figname+ "time_first_gypsum.png") 
@@ -254,7 +257,7 @@ ax.set_xlabel('low $\longleftarrow$ strait efficiency  $\longrightarrow$ high', 
 
 plt.ylabel('time [$kyr$]', fontsize= fs)
 plt.title("time to first halite", fontsize= fs*1.2)
-
+plt.ylim([y_min, y_max])
 plt.legend(handles=legend_elements, loc='upper right')
 plt.tight_layout()
 fig.savefig( figname+ "time_first_halite.png") 
@@ -295,7 +298,7 @@ ax.set_xlabel('low $\longleftarrow$ strait efficiency  $\longrightarrow$ high', 
 
 plt.ylabel('time [$kyr$]', fontsize= fs)
 plt.title("time between first gypsum and first halite", fontsize= fs*1.2)
-
+plt.ylim([y_min, y_max])
 plt.legend(handles=legend_elements, loc='upper right')
 plt.tight_layout()
 fig.savefig( figname+ "time_between_first_gypsum_halite.png") 
@@ -336,7 +339,7 @@ ax.set_xlabel('low $\longleftarrow$ strait efficiency  $\longrightarrow$ high', 
 
 plt.ylabel('time [$kyr$]', fontsize= fs)
 plt.title("time between all gypsum and all halite", fontsize= fs*1.2)
-
+plt.ylim([y_min, y_max])
 plt.legend(handles=legend_elements, loc='upper right')
 plt.tight_layout()
 fig.savefig( figname+ "time_between_all_gypsum_halite.png") 
@@ -379,197 +382,198 @@ plt.ylabel('time [$kyr$]', fontsize= fs)
 plt.title("time tbetween all gypsum and first halite", fontsize= fs*1.2)
 
 plt.legend(handles=legend_elements, loc='upper right')
+plt.ylim([y_min, y_max])
 plt.tight_layout()
 fig.savefig( figname+ "time_between_all_gypsum_first_halite.png") 
 fig.savefig( figname+ "time_between_all_gypsum_first_halite.svg", format="svg") 
 plt.close() 
 
 
-#%% PLots salinity
-iif1=  0
-iif2= -1
+# #%% PLots salinity
+# iif1=  0
+# iif2= -1
 
-iic1=  -1
-iic2= 0
+# iic1=  -1
+# iic2= 0
 
-fs  =  15
+# fs  =  15
 
-fig, ax = plt.subplots()
-axins = ax.inset_axes([0.4, 0.47, 0.4, 0.4])
-S= 1
+# fig, ax = plt.subplots()
+# axins = ax.inset_axes([0.4, 0.47, 0.4, 0.4])
+# S= 1
 
-for ie in [-1, 0]:
-    y1 = arrSA1[S, :, iic1, ie, iif1] 
-    y2 = arrSA1[S, :, iic2, ie, iif2]
-    ax.fill_between(GA1, y1, y2, where= y2 <=350, interpolate=True, color='grey',
-                 alpha=0.5)
-    axins.fill_between(GA1, y1, y2, where= y2 <=350, interpolate=True, color='grey',
-                 alpha=0.5)
+# for ie in [-1, 0]:
+#     y1 = arrSA1[S, :, iic1, ie, iif1] 
+#     y2 = arrSA1[S, :, iic2, ie, iif2]
+#     ax.fill_between(GA1, y1, y2, where= y2 <=350, interpolate=True, color='grey',
+#                  alpha=0.5)
+#     axins.fill_between(GA1, y1, y2, where= y2 <=350, interpolate=True, color='grey',
+#                  alpha=0.5)
     
-    y1 = arrSA2[S, :, iic1, ie, iif1] 
-    y2 = arrSA2[S, :, iic2, ie, iif2] 
-    ax.fill_between(GA2, y1, y2, where= y2 <=350, interpolate=True, color='grey',
-                 alpha=0.5)
-    axins.fill_between(GA2, y1, y2, where= y2 <=350, interpolate=True, color='grey',
-                 alpha=0.5)
+#     y1 = arrSA2[S, :, iic1, ie, iif1] 
+#     y2 = arrSA2[S, :, iic2, ie, iif2] 
+#     ax.fill_between(GA2, y1, y2, where= y2 <=350, interpolate=True, color='grey',
+#                  alpha=0.5)
+#     axins.fill_between(GA2, y1, y2, where= y2 <=350, interpolate=True, color='grey',
+#                  alpha=0.5)
     
-    ax.plot(GA1, arrSA1[S, :, iic1, ie, iif1] , color = colorA1)
-    ax.plot(GA1, arrSA1[S, :, iic2, ie, iif2] , color = colorA1)
-    axins.plot(GA1, arrSA1[S, :, iif1, ie, iif1], color = colorA1)
-    axins.plot(GA1, arrSA1[S, :, iic2, ie, iif2], color = colorA1)
+#     ax.plot(GA1, arrSA1[S, :, iic1, ie, iif1] , color = colorA1)
+#     ax.plot(GA1, arrSA1[S, :, iic2, ie, iif2] , color = colorA1)
+#     axins.plot(GA1, arrSA1[S, :, iif1, ie, iif1], color = colorA1)
+#     axins.plot(GA1, arrSA1[S, :, iic2, ie, iif2], color = colorA1)
     
-    ax.plot(GA2, arrSA2[S, :, iic1, ie, iif1] , color = colorA2)
-    ax.plot(GA2, arrSA2[S, :, iic2, ie, iif2] , color = colorA2)
-    axins.plot(GA2, arrSA2[S, :, iic1, ie, iif1] , color = colorA2)
-    axins.plot(GA2, arrSA2[S, :, iic2, ie, iif2] , color = colorA2)
-
-    
-    #ie+=1
-ax.hlines(145   , GA1[0], GA1[-1],  linewidth= 2, linestyle = ':', color= 'k')
-axins.hlines(145, GA1[0], GA1[-1],  linewidth= 2, linestyle = ':', color= 'k')
-ax.hlines(350   , GA1[0], GA1[-1],  linewidth= 2, linestyle = '-', color= 'k')
-axins.hlines(350, GA1[0], GA1[-1],  linewidth= 2, linestyle = '-', color= 'k')
-
-# inset axes....
-
-# sub region of the original image
-x1, x2, y1, y2 =GA1[0], 0.6*10**3, 310, 350
-axins.set_xlim(x1, x2)
-axins.set_ylim(y1, y2)
-
-
-ax.indicate_inset_zoom(axins, edgecolor="black")
-axins.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
-ax.set_xscale('log')
-#axins.set_xscale('log')
-
-
-axins.set_xticklabels([])
-#axins.set_yticklabels([ ])
-axins.set_xticks([])
-#axins.set_yticks([])
-ax.set_xlim([GA1[0], GA1[-1]])
-ax.set_ylim([35, 350])
-
-ax.spines['left'].set_visible(False)
-ax.spines['right'].set_visible(False)
-ax.spines['top'].set_visible(False)
-ax.spines['bottom'].set_visible(False)
-ax.set_xlabel('low $\longleftarrow$ strait efficiency  $\longrightarrow$ high', color='black', fontsize= fs)
-
-#plt.xlabel('Connection to Atlantic')
-plt.ylabel('Salinity [$kg/m³$]', fontsize= fs)
-plt.title("upper box", fontsize= fs*1.2)
-
-plt.legend(handles=legend_elements, loc='upper right')
-plt.tight_layout()
-# fig.savefig( figname+ "UpperBox.png") 
-# fig.savefig( figname+ "UpperBox.svg", format="svg") 
-#plt.close() 
-
-
-#%% PLOTS Time
-
-iif1=  0
-iif2= -1
-
-iic1=  -1
-iic2= 0
-
-fs  =  15
-
-fig, ax = plt.subplots()
-
-
-for ie in [-1, 0]:
-    y1 = Req_St_A1[:, iic1, ie, iif1]/1000
-    y2 = Req_St_A1[:, iic2, ie, iif2]/1000
-    ax.fill_between(GA1, y1, y2, where= y2 <=350, interpolate=True, color='grey',
-                 alpha=0.5)
+#     ax.plot(GA2, arrSA2[S, :, iic1, ie, iif1] , color = colorA2)
+#     ax.plot(GA2, arrSA2[S, :, iic2, ie, iif2] , color = colorA2)
+#     axins.plot(GA2, arrSA2[S, :, iic1, ie, iif1] , color = colorA2)
+#     axins.plot(GA2, arrSA2[S, :, iic2, ie, iif2] , color = colorA2)
 
     
-    y1 = Req_St_A2[:, iic1, ie, iif1]/1000
-    y2 = Req_St_A2[:, iic2, ie, iif2]/1000
-    ax.fill_between(GA2, y1, y2, where= y2 <=350, interpolate=True, color='grey',
-                 alpha=0.5)
+#     #ie+=1
+# ax.hlines(145   , GA1[0], GA1[-1],  linewidth= 2, linestyle = ':', color= 'k')
+# axins.hlines(145, GA1[0], GA1[-1],  linewidth= 2, linestyle = ':', color= 'k')
+# ax.hlines(350   , GA1[0], GA1[-1],  linewidth= 2, linestyle = '-', color= 'k')
+# axins.hlines(350, GA1[0], GA1[-1],  linewidth= 2, linestyle = '-', color= 'k')
+
+# # inset axes....
+
+# # sub region of the original image
+# x1, x2, y1, y2 =GA1[0], 0.6*10**3, 310, 350
+# axins.set_xlim(x1, x2)
+# axins.set_ylim(y1, y2)
+
+
+# ax.indicate_inset_zoom(axins, edgecolor="black")
+# axins.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
+# ax.set_xscale('log')
+# #axins.set_xscale('log')
+
+
+# axins.set_xticklabels([])
+# #axins.set_yticklabels([ ])
+# axins.set_xticks([])
+# #axins.set_yticks([])
+# ax.set_xlim([GA1[0], GA1[-1]])
+# ax.set_ylim([35, 350])
+
+# ax.spines['left'].set_visible(False)
+# ax.spines['right'].set_visible(False)
+# ax.spines['top'].set_visible(False)
+# ax.spines['bottom'].set_visible(False)
+# ax.set_xlabel('low $\longleftarrow$ strait efficiency  $\longrightarrow$ high', color='black', fontsize= fs)
+
+# #plt.xlabel('Connection to Atlantic')
+# plt.ylabel('Salinity [$kg/m³$]', fontsize= fs)
+# plt.title("upper box", fontsize= fs*1.2)
+
+# plt.legend(handles=legend_elements, loc='upper right')
+# plt.tight_layout()
+# # fig.savefig( figname+ "UpperBox.png") 
+# # fig.savefig( figname+ "UpperBox.svg", format="svg") 
+# #plt.close() 
+
+
+# #%% PLOTS Time
+
+# iif1=  0
+# iif2= -1
+
+# iic1=  -1
+# iic2= 0
+
+# fs  =  15
+
+# fig, ax = plt.subplots()
+
+
+# for ie in [-1, 0]:
+#     y1 = Req_St_A1[:, iic1, ie, iif1]/1000
+#     y2 = Req_St_A1[:, iic2, ie, iif2]/1000
+#     ax.fill_between(GA1, y1, y2, where= y2 <=350, interpolate=True, color='grey',
+#                  alpha=0.5)
 
     
-    ax.plot(    GA1, Req_St_A1[ :, iic1, ie, iif1]/1000 , color = colorA1)
-    ax.plot(    GA1, Req_St_A1[ :, iic2, ie, iif2]/1000 , color = colorA1)
+#     y1 = Req_St_A2[:, iic1, ie, iif1]/1000
+#     y2 = Req_St_A2[:, iic2, ie, iif2]/1000
+#     ax.fill_between(GA2, y1, y2, where= y2 <=350, interpolate=True, color='grey',
+#                  alpha=0.5)
 
     
-    ax.plot(    GA2, Req_St_A2[ :, iic1, ie, iif1]/1000 , color = colorA2)
-    ax.plot(    GA2, Req_St_A2[ :, iic2, ie, iif2]/1000 , color = colorA2)
-
-ax.set_xscale('log')
-ax.set_xlim([GA1[0], GA1[-1]])
-
-
-ax.spines['left'].set_visible(False)
-ax.spines['right'].set_visible(False)
-ax.spines['top'].set_visible(False)
-ax.spines['bottom'].set_visible(False)
-ax.set_xlabel('low $\longleftarrow$ strait efficiency  $\longrightarrow$ high', color='black', fontsize= fs)
-
-#plt.xlabel('Connection to Atlantic')
-plt.ylabel('time [kyr]', fontsize= fs)
-plt.title("Time until first box reaches halite", fontsize= fs*1.2)
-
-plt.legend(handles=legend_elements, loc='upper right')
-plt.tight_layout()
-# fig.savefig( figname+ "UpperBox.png") 
-# fig.savefig( figname+ "UpperBox.svg", format="svg") 
-#plt.close() 
-
-#%% PLOTS Time
-
-iif1=  0
-iif2= -1
-
-iic1=  -1
-iic2= 0
-
-fs  =  15
-
-fig, ax = plt.subplots()
-
-
-for ie in [-1, 0]:
-    y1 = Req_End_A1[:, iic1, ie, iif1]/1000
-    y2 = Req_End_A1[:, iic2, ie, iif2]/1000
-    ax.fill_between(GA1, y1, y2, where= y2 <=350, interpolate=True, color='grey',
-                 alpha=0.5)
+#     ax.plot(    GA1, Req_St_A1[ :, iic1, ie, iif1]/1000 , color = colorA1)
+#     ax.plot(    GA1, Req_St_A1[ :, iic2, ie, iif2]/1000 , color = colorA1)
 
     
-    y1 = Req_End_A2[:, iic1, ie, iif1]/1000
-    y2 = Req_End_A2[:, iic2, ie, iif2]/1000
-    ax.fill_between(GA2, y1, y2, where= y2 <=350, interpolate=True, color='grey',
-                 alpha=0.5)
+#     ax.plot(    GA2, Req_St_A2[ :, iic1, ie, iif1]/1000 , color = colorA2)
+#     ax.plot(    GA2, Req_St_A2[ :, iic2, ie, iif2]/1000 , color = colorA2)
+
+# ax.set_xscale('log')
+# ax.set_xlim([GA1[0], GA1[-1]])
+
+
+# ax.spines['left'].set_visible(False)
+# ax.spines['right'].set_visible(False)
+# ax.spines['top'].set_visible(False)
+# ax.spines['bottom'].set_visible(False)
+# ax.set_xlabel('low $\longleftarrow$ strait efficiency  $\longrightarrow$ high', color='black', fontsize= fs)
+
+# #plt.xlabel('Connection to Atlantic')
+# plt.ylabel('time [kyr]', fontsize= fs)
+# plt.title("Time until first box reaches halite", fontsize= fs*1.2)
+
+# plt.legend(handles=legend_elements, loc='upper right')
+# plt.tight_layout()
+# # fig.savefig( figname+ "UpperBox.png") 
+# # fig.savefig( figname+ "UpperBox.svg", format="svg") 
+# #plt.close() 
+
+# #%% PLOTS Time
+
+# iif1=  0
+# iif2= -1
+
+# iic1=  -1
+# iic2= 0
+
+# fs  =  15
+
+# fig, ax = plt.subplots()
+
+
+# for ie in [-1, 0]:
+#     y1 = Req_End_A1[:, iic1, ie, iif1]/1000
+#     y2 = Req_End_A1[:, iic2, ie, iif2]/1000
+#     ax.fill_between(GA1, y1, y2, where= y2 <=350, interpolate=True, color='grey',
+#                  alpha=0.5)
 
     
-    ax.plot(    GA1, Req_End_A1[ :, iic1, ie, iif1]/1000 , color = colorA1)
-    ax.plot(    GA1, Req_End_A1[ :, iic2, ie, iif2]/1000 , color = colorA1)
+#     y1 = Req_End_A2[:, iic1, ie, iif1]/1000
+#     y2 = Req_End_A2[:, iic2, ie, iif2]/1000
+#     ax.fill_between(GA2, y1, y2, where= y2 <=350, interpolate=True, color='grey',
+#                  alpha=0.5)
 
     
-    ax.plot(    GA2, Req_End_A2[ :, iic1, ie, iif1]/1000 , color = colorA2)
-    ax.plot(    GA2, Req_End_A2[ :, iic2, ie, iif2]/1000 , color = colorA2)
+#     ax.plot(    GA1, Req_End_A1[ :, iic1, ie, iif1]/1000 , color = colorA1)
+#     ax.plot(    GA1, Req_End_A1[ :, iic2, ie, iif2]/1000 , color = colorA1)
 
-ax.set_xscale('log')
-ax.set_xlim([GA1[0], GA1[-1]])
+    
+#     ax.plot(    GA2, Req_End_A2[ :, iic1, ie, iif1]/1000 , color = colorA2)
+#     ax.plot(    GA2, Req_End_A2[ :, iic2, ie, iif2]/1000 , color = colorA2)
+
+# ax.set_xscale('log')
+# ax.set_xlim([GA1[0], GA1[-1]])
 
 
-ax.spines['left'].set_visible(False)
-ax.spines['right'].set_visible(False)
-ax.spines['top'].set_visible(False)
-ax.spines['bottom'].set_visible(False)
-ax.set_xlabel('low $\longleftarrow$ strait efficiency  $\longrightarrow$ high', color='black', fontsize= fs)
+# ax.spines['left'].set_visible(False)
+# ax.spines['right'].set_visible(False)
+# ax.spines['top'].set_visible(False)
+# ax.spines['bottom'].set_visible(False)
+# ax.set_xlabel('low $\longleftarrow$ strait efficiency  $\longrightarrow$ high', color='black', fontsize= fs)
 
-#plt.xlabel('Connection to Atlantic')
-plt.ylabel('time [kyr]', fontsize= fs)
-plt.title("Time until second box reaches halite", fontsize= fs*1.2)
+# #plt.xlabel('Connection to Atlantic')
+# plt.ylabel('time [kyr]', fontsize= fs)
+# plt.title("Time until second box reaches halite", fontsize= fs*1.2)
 
-plt.legend(handles=legend_elements, loc='upper right')
-plt.tight_layout()
-# fig.savefig( figname+ "UpperBox.png") 
-# fig.savefig( figname+ "UpperBox.svg", format="svg") 
-#plt.close() 
+# plt.legend(handles=legend_elements, loc='upper right')
+# plt.tight_layout()
+# # fig.savefig( figname+ "UpperBox.png") 
+# # fig.savefig( figname+ "UpperBox.svg", format="svg") 
+# #plt.close() 
