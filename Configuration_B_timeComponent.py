@@ -41,7 +41,7 @@ SG  = 145
 SA  =  36
 SH  = 350
 #
-G   =np.logspace(2, 6, num=450)
+G   =np.logspace(2, 4, num=900)
 #
 E_step = 12.5
 Etmp   = np.arange(12.5, 80, E_step)
@@ -49,7 +49,7 @@ E      = Etmp/(100*yr2sc)
 e0     =-0.01/yr2sc
 #
 #scenario B (restricted margin)
-C      = np.array([10**4, 10**6])
+C      = np.array([10**2, 10**4, 10**6])
 
 kappa_mix   = 1*10**(-4)
 kappa_conv  = 1*10**(-1)
@@ -141,7 +141,7 @@ for f in F:
 
     
 #%% Save arrays in txt files
-name_dir="../qoTaS_DATA/Output_ScenB_mini_time"
+name_dir="../qoTaS_DATA/Output_ScenB_mini_time_focus"
 ci=0
 for c in C:
     fi=0
