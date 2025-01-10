@@ -17,7 +17,7 @@ Load the data separately, this is not yet implemented
 #%% get data A1
 SH = 350
 SG = 145
-figname = "../qoTaS_FIGURE/Output_mini_time_"
+figname = "../qoTaS_FIGURE/Output_mini_time_new"
 core_name= "../qoTaS_DATA/Output_ScenA1_mini_time"
 FA1   = np.array([0.01, 0.1])
 CA1   = np.array([10,50,90])/100
@@ -122,8 +122,8 @@ legend_elements_2 = [Line2D([0], [0], color=colorA1, alpha = 0.5, lw=4, label='A
                      Line2D([0], [0], color=colorB , alpha = 0.5, lw=4, linestyle= ':', label='B Halite')]
 color_conf = [colorA1, colorA2, colorB]
 
-y_min = -75
-y_max = 150
+y_min = 0
+y_max = 130
 #%% PLot salinity for different configurations
 iif1=  0
 iif2= -1
@@ -473,7 +473,7 @@ axins.set_xlim(x1, x2)
 axins.set_ylim(y1, y2)
 ax.indicate_inset_zoom(axins, edgecolor="black")
 axins.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
-axins.set_xticklabels([])
+# axins.set_xticklabels([])
 # axins.set_xticks([])
 
 ax.spines['left'].set_visible(False)
@@ -515,11 +515,36 @@ for conf in [0,1,2]:
                               T_All_G[ :, iic2, iie, iif2, conf])   )/1000)
             y1[y1==0.0]= np.nan
             y2[y2==0.0]= np.nan
-
+            
             ax.plot(G, y1 , color = color_conf[conf])
             ax.plot(G, y2 , color = color_conf[conf])
             axins.plot(G, y1 , color = color_conf[conf])
             axins.plot(G, y2 , color = color_conf[conf])
+            
+# add asymptote
+
+def get_asymptote(conf, iie, iic, T_All_H, T_All_G):
+        
+    y1 = ((T_All_H[ :, iic, iie, iif1, conf] - 
+           np.maximum(T_First_H[ :, iic, iie, iif1, conf], 
+                      T_All_G[ :, iic, iie, iif1, conf])   )/1000)
+    y2 = ((T_All_H[ :, iic2, iie, iif2, conf] - 
+           np.maximum(T_First_H[ :, iic, iie, iif2, conf], 
+                      T_All_G[ :, iic2, iie, iif2, conf])   )/1000)
+    y1[y1==0.0]= np.nan
+    y2[y2==0.0]= np.nan
+    iig = np.where(np.isnan(y1))
+    return iig
+
+conf = 0
+iie = -1
+iic = 1
+iig = get_asymptote(conf, iie, iic, T_All_H, T_All_G)
+ax.vlines(G[iig[0][0]-1], y_min, y_max , color = color_conf[conf], alpha = 0.5)
+ax.plot(G, y2 , color = color_conf[conf], alpha = 0.5)
+axins.plot(G, y1 , color = color_conf[conf], alpha = 0.5)
+axins.plot(G, y2 , color = color_conf[conf], alpha = 0.5)
+            
 
 ax.set_xscale('log')
 ax.set_xlim([G[0], G[-1]])
@@ -529,8 +554,8 @@ axins.set_xlim(x1, x2)
 axins.set_ylim(y1, y2)
 ax.indicate_inset_zoom(axins, edgecolor="black")
 axins.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
-axins.set_xticklabels([])
-# axins.set_xticks([])
+# axins.set_xticklabels([])
+# # axins.set_xticks([])
 
 ax.spines['left'].set_visible(False)
 ax.spines['right'].set_visible(False)
