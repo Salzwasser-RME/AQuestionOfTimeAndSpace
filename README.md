@@ -12,6 +12,7 @@ This repository contains the models and analysis that were used for the paper "A
 - Analysis_A1.py
 - Analysis_A2.py
 - Analysis_B.py
+- Analysis_Timecomponent.py
 
   
 ## Folder structure:
