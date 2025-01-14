@@ -38,6 +38,7 @@ D0  = 1500
 Dint=  500
 
 SA  =  36
+SG  = 145    
 SH  = 350
 #
 G   =np.logspace(2, 3, num=30)
@@ -55,7 +56,7 @@ d_mix       = 0.5*D0
 
 arrSA1 = np.zeros((3, len(G), len(C), len(E), len(F)))
 arrFA1 = np.zeros((2, len(G), len(C), len(E), len(F)))
-
+arrTime = np.zeros((2, len(G), len(C), len(E), len(F)))
 #%% loop
 print( "start loop" )
 fi=0
@@ -64,7 +65,7 @@ for f in F:
     ic=0
     for c in C:
         ie =0
-        for e in E:
+        for e in E:#
             ig = 0
             for g in  G:
                 # t-max increases with decreasing g to
@@ -95,7 +96,19 @@ for f in F:
                                           - (F21 + F20)*S[2,ii] 
                                           - mix)*dt*yr2sc/V[2])
                     ii+=1
-                    
+                time_1_gypsum = 0
+                time_0_halite = 0
+                time_1_halite = 0
+                if max(S[0,:])>= SH: # margin has reached halite
+                    time_1_gypsum = np.searchsorted(S[1,:], SG)*dt
+                    time_0_halite = np.searchsorted(S[0,:], SH)*dt
+                    if max(S[1,:])>= SH: # open box also has reached halite
+                        time_1_halite = np.searchsorted(S[1,:], SH)*dt
+
+                            
+                DT_G1_H0 = time_0_halite - time_1_gypsum
+                DT_G1_H1 = time_1_halite - time_1_gypsum
+                arrTime[:, ig, ic, ie, fi] = [DT_G1_H0, DT_G1_H1]   
                 arrSA1[:, ig, ic, ie, fi]= [S[0,ii], S[1,ii], S[2,ii]]
                 arrFA1[:, ig, ic, ie, fi]= [Q,F02]
                 
@@ -106,7 +119,7 @@ for f in F:
             
 #%% Save arrays in txt files
 print( "begin saving" )
-name_dir="DATA/Output_ScenA1_mini_"
+name_dir="DATA/Output_ScenA1_mini_time"
 ci=0
 for c in C:
     fi=0
@@ -133,6 +146,14 @@ for c in C:
         #Q
         data = np.squeeze(arrFA1[1,:,ci, :, fi])
         np.savetxt(name_file+"_F.txt",data,delimiter=",")
+        
+        #Time between gypsum and Halite
+        data = np.squeeze(arrTime[0,:,ci, :, fi])
+        np.savetxt(name_file+"_Time_G1_H0.txt",data,delimiter=",")
+        
+        #Time between gypsum and Halite
+        data = np.squeeze(arrTime[0,:,ci, :, fi])
+        np.savetxt(name_file+"_Time_G1_H1.txt",data,delimiter=",")
         
         fi+=1
     ci+=1
