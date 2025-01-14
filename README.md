@@ -3,9 +3,9 @@ This repository contains the models and analysis that were used for the paper "A
 
 ## Scripts:
 ### Modeling:
-- Configuration_A1.py
-- Configuration_A2.py
-- Configuration_B.py
+- Configuration_A1_TimeComponent.py
+- Configuration_A2_TimeComponent.py
+- Configuration_B_TimeComponent.py
 - Configuration_B+.py
 
 ### Analysing:
